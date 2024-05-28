@@ -37,7 +37,7 @@ pipeline {
         stage('Push Docker Image to Docker Hub') {
             steps {
                 script {
-                    docker.withRegistry('https://hub.docker.com', 'amirdirin') {
+                    docker.withRegistry('https://hub.docker.com', 'docker-hub-credentials') {
                         docker.image('unittest-image').push('latest')
                     }
                 }
