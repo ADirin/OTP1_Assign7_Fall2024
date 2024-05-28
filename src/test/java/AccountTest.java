@@ -7,11 +7,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AccountTest {
 
-    private Account account;
+    private example.Account account;
 
     @BeforeEach
     public void setUp() {
-        account = new Account();
+        account = new example.Account();
     }
 
     @Test

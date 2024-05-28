@@ -1,3 +1,5 @@
+package example;
+
 public class Account {
 
         private double balance;
