@@ -2,17 +2,44 @@ pipeline {
     agent any
 
     stages {
+        stage('Checkout SCM') {
+            steps {
+                checkout scm
+            }
+        }
+        
         stage('Build') {
             steps {
-                dir('C:\\Users\\amirdi\\IdeaProjects\\UnitTest') {
-                    bat 'mvn compile' // Compile source code using Maven
+                bat 'mvn clean package'
+            }
+        }
+        
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    docker.build('unittest-image')
                 }
             }
         }
-        stage('Test') {
+        
+        stage('Run Docker Container') {
             steps {
-                dir('C:\\Users\\amirdi\\IdeaProjects\\UnitTest') {
-                    bat 'mvn test' // Run tests using Maven
+                script {
+                    docker.image('unittest-image').inside('-v C:/Users/amirdi/.jenkins/workspace/assignment6:/workspace -w /workspace') {
+                        // Commands to run inside the Docker container
+                        sh 'ls'
+                        sh 'java -jar /workspace/target/testimage.jar'
+                    }
+                }
+            }
+        }
+        
+        stage('Push Docker Image to Docker Hub') {
+            steps {
+                script {
+                    docker.withRegistry('https://hub.docker.com', 'amirdirin') {
+                        docker.image('unittest-image').push('latest')
+                    }
                 }
             }
         }
