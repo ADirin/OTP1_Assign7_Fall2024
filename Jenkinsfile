@@ -5,7 +5,7 @@ pipeline {
         // Define Docker Hub credentials ID
         DOCKERHUB_CREDENTIALS_ID = 'docker-hub-credentials'
         // Define Docker Hub repository name
-        DOCKERHUB_REPO = 'amirdirin/assign7_fall2024'
+        DOCKERHUB_REPO = 'amirdirin/assign7-fall2024_final'
         // Define Docker image tag
         DOCKER_IMAGE_TAG = 'latest'
     }
