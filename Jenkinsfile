@@ -14,7 +14,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Checkout code from Git repository
-                git 'https://github.com/ADirin/FarToCel_Fall2024.git'
+                git 'https://github.com/ADirin/OTP1_Assign7_Fall2024.git'
             }
         }
         
