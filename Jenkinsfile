@@ -2,11 +2,8 @@ pipeline {
     agent any
     
     environment {
-        // Define Docker Hub credentials ID
         DOCKERHUB_CREDENTIALS_ID = 'docker-hub-credentials'
-        // Define Docker Hub repository name
-        DOCKERHUB_REPO = 'amirdirin/assign7-fall2024_final'
-        // Define Docker image tag
+        DOCKERHUB_REPO = 'amirdirin/assign7_fall2024'
         DOCKER_IMAGE_TAG = 'latest'
     }
 
@@ -15,7 +12,6 @@ pipeline {
             steps {
                 script {
                     retry(3) {
-                        // Checkout code from Git repository
                         git branch: 'master', url: 'https://github.com/ADirin/OTP1_Assign7_Fall2024.git'
                     }
                 }
@@ -26,7 +22,9 @@ pipeline {
             steps {
                 echo 'Starting Build Docker Image'
                 script {
-                    docker.build("${DOCKERHUB_REPO}:${DOCKER_IMAGE_TAG}")
+                    timeout(time: 10, unit: 'MINUTES') {
+                        docker.build("${DOCKERHUB_REPO}:${DOCKER_IMAGE_TAG}", '--progress=plain')
+                    }
                     echo 'Completed Build Docker Image'
                 }
             }
