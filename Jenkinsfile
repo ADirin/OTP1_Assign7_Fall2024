@@ -22,9 +22,16 @@ pipeline {
             steps {
                 echo 'Starting Build Docker Image'
                 script {
-                    docker.build('unittest-image')
+                    timeout(time: 5, unit: 'MINUTES') {
+                        try {
+                            docker.build('unittest-image')
+                            echo 'Completed Build Docker Image'
+                        } catch (Exception e) {
+                            echo "Failed to build Docker image: ${e.message}"
+                            throw e
+                        }
+                    }
                 }
-                echo 'Completed Build Docker Image'
             }
         }
         
